@@ -4,21 +4,21 @@ TEST_DIR=./tests
 BUILD_DIR=./build
 REPORT_DIR=./report
 
-ifeq($(wildcard $(BUILD_DIR), ))
-	$(shell mkdir $(BUILD_DIR))
+ifeq ($(wildcard $(BUILD_DIR)), )
+  $(shell mkdir $(BUILD_DIR))
 endif
-ifeq($(wildcard $(REPORT_DIR), ))
-	$(shell mkdir $(REPORT_DIR))
+ifeq ($(wildcard $(REPORT_DIR)), )
+  $(shell mkdir $(REPORT_DIR))
 endif
 
-SRC=$(wildcard %.c)
+SRC=$(wildcard *.c)
 OBJ=$(addprefix $(BUILD_DIR)/,$(SRC:%.c=%.o))
 TARGET=s21_matrix.a
 
 $(TARGET): $(OBJ)
 	ar rcs $@ $(OBJ)
 
-$(OBJ): %.c
+$(BUILD_DIR)/%.o: %.c    
 	$(CC) $(CFLAGS) -c $< -o $@
 
 test: clean $(TARGET)
@@ -27,7 +27,6 @@ test: clean $(TARGET)
 
 gcov_report: clean gcov_flags $(TARGET)	
 	cd $(TEST_DIR) && make gcov
-#	./$(TEST_DIR)/$(BUILD_DIR)/$(TEST_EXE)
 	lcov -t "coverage_report" -o s21_matrix.info -c -d $(BUILD_DIR) -d $(TEST_DIR)/$(BUILD_DIR)
 	genhtml s21_matrix.info -o report 
 	xdg-open $(REPORT_DIR)/index.html
@@ -36,11 +35,11 @@ gcov_flags:
 	$(eval CFLAGS += -g3 --coverage)
 
 clean_obj:
-	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_DIR)/*
 	rm -rf $(TARGET)
 
 clean_gcov:
-	rm -rf $(REPORT_DIR)
+	rm -rf $(REPORT_DIR)/*
 
 clean: clean_obj clean_gcov
 	cd $(TEST_DIR) && make clean

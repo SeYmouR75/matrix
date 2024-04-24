@@ -3,8 +3,8 @@ CFLAGS=-std=c11 -Wall -Werror -Wextra
 LIBS=-lcheck -lm -lsubunit
 
 BUILD_DIR=./build
-SRC=$(wildcard %.c)
-OBJ=$(addprefix $(BUILD_DIR)/,$(SRC_C:%.c=%.o))
+SRC=$(wildcard *.c)
+OBJ=$(addprefix $(BUILD_DIR)/,$(SRC:%.c=%.o))
 
 TARGET=s21_test_matrix.exe
 
@@ -19,9 +19,9 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(S21_LIB) -o $(BUILD_DIR)/$@ $(LIBS)
 
-$(OBJ):
-	$(CC) $(CFLAGS) -c $(SRC) -o $(OBJ)
-
+$(BUILD_DIR)/%.o: %.c    
+	$(CC) $(CFLAGS) -c $< -o $@
+	
 test: $(TARGET)
 	./$(BUILD_DIR)/$(TARGET)
 
@@ -37,4 +37,4 @@ clang_format: clang_check
 	clang-format -style=Google -i *.c
 
 clean:
-	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_DIR)/*

@@ -1,5 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#define INVALID_MATRIX 1
+#define INVALID_CALCULATIONS 2
 #define SUCCESS 1
 #define FAILURE 0
 
