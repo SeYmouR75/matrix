@@ -17,7 +17,8 @@ START_TEST(test_normal){
     ck_assert_ptr_nonnull(actual.matrix);
     ck_assert_int_eq(expected.rows, actual.rows);
     ck_assert_int_eq(expected.columns, actual.columns);
-
+    s21_fill_matrix(&actual, 1.232);
+    s21_fill_matrix(&expected, 1.232);
     for(int i = 0; i < expected.rows; i++){
         ck_assert_ptr_nonnull(actual.matrix[i]);
         for(int j = 0; j < expected.columns; j++){
