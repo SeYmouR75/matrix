@@ -6,17 +6,21 @@ START_TEST(test_normal){
     int rows = normal_vals[_i];
     _i++;
     int columns = normal_vals[_i];
+
     matrix_t actual, expected;
     expected.rows = rows;
     expected.columns = columns;
+
     expected.matrix = malloc(expected.rows * sizeof(double));
     for(int i = 0; i < expected.rows; i++){
         expected.matrix[i] = malloc(expected.columns * sizeof(double));
     }
+
     ck_assert_int_eq(0, s21_create_matrix(rows, columns, &actual));
     ck_assert_ptr_nonnull(actual.matrix);
     ck_assert_int_eq(expected.rows, actual.rows);
     ck_assert_int_eq(expected.columns, actual.columns);
+    
     s21_fill_matrix(&actual, 1.232);
     s21_fill_matrix(&expected, 1.232);
     for(int i = 0; i < expected.rows; i++){

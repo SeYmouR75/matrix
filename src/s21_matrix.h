@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define INVALID_MATRIX 1
-#define INVALID_CALCULATIONS 2
-#define SUCCESS 1
-#define FAILURE 0
+typedef enum res_code {
+    OK = 0,
+    INVALID_MATRIX = 1,
+    INVALID_CALCULATIONS = 2
+} res_code;
 
 typedef struct matrix_struct {
     double** matrix;
