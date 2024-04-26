@@ -28,6 +28,13 @@ START_TEST(test_normal){
 }
 END_TEST
 
+int edge_vals[] = {};
+
+
+// START_TEST(test_edge){
+//     int rows = 
+// }
+
 
 Suite *suite_s21_create_matrix(){
     Suite *suite = suite_create("suite_s21_create_matrix");
