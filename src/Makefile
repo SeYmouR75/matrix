@@ -27,8 +27,8 @@ test: clean $(TARGET)
 
 gcov_report: clean gcov_flags $(TARGET)	
 	cd $(TEST_DIR) && make gcov
-	lcov -t "coverage_report" -o s21_matrix.info -c -d $(BUILD_DIR) -d $(TEST_DIR)/$(BUILD_DIR)
-	genhtml s21_matrix.info -o report 
+	lcov -t "coverage_report" -o $(REPORT_DIR)/s21_matrix.info -c -d $(BUILD_DIR) -d $(TEST_DIR)/$(BUILD_DIR)
+	genhtml $(REPORT_DIR)/s21_matrix.info -o report 
 	xdg-open $(REPORT_DIR)/index.html
 
 gcov_flags: 
