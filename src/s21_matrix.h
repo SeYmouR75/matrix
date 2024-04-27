@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <string.h>
+#include <stdbool.h>
 
 typedef enum res_code {
     OK = 0,
@@ -29,3 +31,4 @@ int s21_inverse_matrix(matrix_t *A, matrix_t *result);
 
 //utils
 void s21_fill_matrix(matrix_t *result, double value);
+bool is_doubles_eq(double a, double b, double EPS);
