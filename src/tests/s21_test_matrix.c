@@ -13,7 +13,7 @@ void run_tests() {
   Suite *suites_core[] = {
         suite_s21_create_matrix(),   
         suite_s21_remove_matrix(),  
-        // suite_s21_eq_matrix(), 
+        suite_s21_eq_matrix(), 
         // suite_s21_sum_matrix(),   
         // suite_s21_sub_matrix(), 
         // suite_s21_mult_number(),  
