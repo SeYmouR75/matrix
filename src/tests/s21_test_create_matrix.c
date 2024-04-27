@@ -1,11 +1,20 @@
 #include "s21_test_matrix.h"
 
-int normal_vals[] = {5, 5, 10, 10, 1, 1, 4, 51, 13, 5};
+static int normal_vals[] = {5, 5, 6, 7, 1, 1, 4, 5, 2, 5};
 
-START_TEST(test_normal){
+START_TEST(test_create_normal){
+    if(_i == 0){
+        printf("\n\t______________\n");
+        printf("\tNORMAL_VALS");
+        printf("\n\t______________\n");
+    }
+
     int rows = normal_vals[_i];
     _i++;
     int columns = normal_vals[_i];
+
+    printf("\n_________\n");
+    printf("iteration:%d start.rows:%d start.cols:%d\n", _i - 1, rows, columns);
 
     matrix_t actual, expected;
     expected.rows = rows;
@@ -21,6 +30,9 @@ START_TEST(test_normal){
     ck_assert_int_eq(expected.rows, actual.rows);
     ck_assert_int_eq(expected.columns, actual.columns);
     
+    printf("act.rows:%d act.cols:%d exp.rows:%d exp.cols:%d", actual.rows, actual.columns, expected.rows, expected.columns);
+    printf("\n_________\n");
+
     s21_fill_matrix(&actual, 1.232);
     s21_fill_matrix(&expected, 1.232);
     for(int i = 0; i < expected.rows; i++){
@@ -29,22 +41,50 @@ START_TEST(test_normal){
             ck_assert_double_eq(expected.matrix[i][j], actual.matrix[i][j]);
         }
     }
+
+    s21_remove_matrix(&actual);
+    s21_remove_matrix(&expected);
 }
 END_TEST
 
-int edge_vals[] = {};
+static int edge_vals[] = {-1, 0, 0, -3, -3, 4, 0.132, 2, 0.0001};
 
+START_TEST(test_create_edge){
+    if(_i == 0){
+        printf("\n\t______________\n");
+        printf("\tEDGE_VALS");
+        printf("\n\t______________\n");
+    }
 
-// START_TEST(test_edge){
-//     int rows = 
-// }
+    int rows = edge_vals[_i];
+    _i++;
+    int columns = edge_vals[_i];
+  
+    printf("\n_________\n");
+    printf("iteration:%d start.rows:%d start.cols:%d\n", _i - 1, rows, columns);
 
+    matrix_t actual;
+
+    ck_assert_int_eq(INVALID_MATRIX, s21_create_matrix(rows, columns, &actual));
+    ck_assert_int_eq(0, actual.rows);
+    ck_assert_int_eq(0, actual.columns);
+
+    printf("act.rows:%d act.cols:%d", actual.rows, actual.columns);
+    printf("\n_________\n");
+}
+END_TEST
 
 Suite *suite_s21_create_matrix(){
     Suite *suite = suite_create("suite_s21_create_matrix");
-    TCase *normal_case = tcase_create("case_s21_create_matrix");
-    tcase_add_loop_test(normal_case, test_normal, 0, sizeof(normal_vals) / sizeof(int));
+
+    TCase *normal_case = tcase_create("case_s21_create_matrix_normal");
+    tcase_add_loop_test(normal_case, test_create_normal, 0, sizeof(normal_vals) / sizeof(int) - 1);
     suite_add_tcase(suite, normal_case);
+
+    TCase *edge_case = tcase_create("case_s21_create_matrix_edge");
+    tcase_add_loop_test(edge_case, test_create_edge, 0, sizeof(edge_vals) / sizeof(int) - 1);
+    suite_add_tcase(suite, edge_case);
+
 
     return suite;
 }

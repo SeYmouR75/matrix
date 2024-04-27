@@ -4,7 +4,7 @@ void run_suite(Suite *suite) {
   SRunner *sr = srunner_create(suite);
 
   srunner_set_fork_status(sr, CK_NOFORK);
-  srunner_run_all(sr, CK_NORMAL);  // CK_MINIMAL CK_NORMAL CK_VERBOSE
+  srunner_run_all(sr, CK_NORMAL);
 
   srunner_free(sr);
 }
@@ -12,7 +12,7 @@ void run_suite(Suite *suite) {
 void run_tests() {
   Suite *suites_core[] = {
         suite_s21_create_matrix(),   
-        // suite_s21_remove_matrix(),  
+        suite_s21_remove_matrix(),  
         // suite_s21_eq_matrix(), 
         // suite_s21_sum_matrix(),   
         // suite_s21_sub_matrix(), 
