@@ -1,7 +1,7 @@
 #include "s21_test_matrix.h"
 
-static int rows_normal[] = {3, 3, 1, 5, 2, 0, 5, 6, 2};
-static int cols_normal[] = {3, 5, 6, 2, 5, 5, 0, 4, 2};
+static int rows_normal[] = {3, 3, 1, 5, 2, 1, 5, 6, 2};
+static int cols_normal[] = {3, 5, 6, 2, 5, 5, 1, 4, 2};
 
 START_TEST(sum_normal_test){
     if (_i == 0){
@@ -19,6 +19,10 @@ START_TEST(sum_normal_test){
     fill_matrix_rand(&B, rand());
 
     s21_sum_matrix(&A, &B, &res);
+
+    print_matrix(&A);
+    print_matrix(&B);
+    print_matrix(&res);
 
     for (int i = 0; i < A.rows; i++){
         for (int j = 0; j < B.columns; j++){
