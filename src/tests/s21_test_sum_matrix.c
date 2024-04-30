@@ -14,7 +14,6 @@ START_TEST(sum_normal_test){
     double actual, expected;
     s21_create_matrix(rows_normal[_i], cols_normal[_i], &A);
     s21_create_matrix(rows_normal[_i], cols_normal[_i], &B);
-    s21_create_matrix(rows_normal[_i], cols_normal[_i], &res);
 
     fill_matrix_rand(&A, rand());
     fill_matrix_rand(&B, rand());

@@ -17,7 +17,8 @@ void fill_matrix_rand(matrix_t *result, double entropy){
 
     for (int i = 0; i < result->rows; i++){
         for (int j = 0; j < result->columns; j++){
-            result->matrix[i][j] = (double)rand() / ((double)RAND_MAX + 1) * entropy;
+            int sign = rand() %2 ? 1 : -1;
+            result->matrix[i][j] = (double)rand() / ((double)RAND_MAX + 1) * entropy * sign;
         }
     }
 }
