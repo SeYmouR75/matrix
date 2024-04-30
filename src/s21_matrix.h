@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdbool.h>
+#include <time.h>
 
 typedef enum res_code {
     OK = 0,
@@ -17,6 +18,7 @@ typedef struct matrix_struct {
 } matrix_t;
 
 //core
+
 int s21_create_matrix(int rows, int columns, matrix_t *result);
 void s21_remove_matrix(matrix_t *A);
 int s21_eq_matrix(matrix_t *A, matrix_t *B);
@@ -30,5 +32,8 @@ int s21_determinant(matrix_t *A, double *result);
 int s21_inverse_matrix(matrix_t *A, matrix_t *result);
 
 //utils
-void s21_fill_matrix(matrix_t *result, double value);
+
+void fill_matrix(matrix_t *result, double value);
+void fill_matrix_rand(matrix_t *result, double entropy);
+void print_matrix(matrix_t *A);
 bool is_doubles_eq(double a, double b, double EPS);
