@@ -18,7 +18,7 @@ START_TEST(remove_normal_test){
 
     matrix_t actual;
     s21_create_matrix(rows, columns, &actual);
-    s21_fill_matrix(&actual, 1.32);
+    fill_matrix(&actual, 1.32);
     s21_remove_matrix(&actual);
     ck_assert_ptr_null(actual.matrix);
     ck_assert_int_eq(actual.rows, 0);
@@ -47,7 +47,7 @@ START_TEST(remove_edge_test){
 
     matrix_t actual;
     s21_create_matrix(rows, columns, &actual);
-    s21_fill_matrix(&actual, 1.32);
+    fill_matrix(&actual, 1.32);
     s21_remove_matrix(&actual);
     ck_assert_ptr_null(actual.matrix);
     ck_assert_int_eq(actual.rows, 0);

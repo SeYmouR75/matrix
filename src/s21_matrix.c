@@ -2,7 +2,7 @@
 
 int s21_create_matrix(int rows, int columns, matrix_t *result){
 
-    if ((rows <= 0) || (columns <= 0)){
+    if ((rows < 0 || columns < 0) || (rows == 0 && columns == 0)){
         result->columns = 0;
         result->rows = 0;
         return INVALID_MATRIX;
@@ -28,8 +28,9 @@ int s21_create_matrix(int rows, int columns, matrix_t *result){
 }
 
 void s21_remove_matrix(matrix_t *A){
-    if (A == NULL) exit(INVALID_MATRIX);
-    if (A->matrix == NULL) exit(INVALID_MATRIX);
+    if (A == NULL) return;
+    if (A->matrix == NULL) return;
+    if ((A->rows == 0) || (A->columns == 0)) return;
     
     for (int i = 0; i < A->rows; i++){
         free(A->matrix[i]);
@@ -44,27 +45,30 @@ void s21_remove_matrix(matrix_t *A){
 
 int s21_eq_matrix(matrix_t *A, matrix_t *B){
     if ((A == NULL) || (B == NULL)) return false;
+    if ((A->rows != B->rows) || (A->columns != B->columns)) return false;
 
-    if (A->rows != B->rows) return false;
-    if (A->columns != B->columns) return false;
+    for (int i = 0; i < A->rows; i++){
+        for (int j = 0; j < A->columns; j++){
+            if (!is_doubles_eq(A->matrix[i][j], B->matrix[i][j], 1e-6)) return false;
+        }
+    }
 
-    bool res = true;
+    return true;
+}
 
-    for (int i = 0; (i < A->rows) && (res == true); i++){
-        for (int j = 0; (j < A->columns) && (res == true); j++){
-            if (!is_doubles_eq(A->matrix[i][j], B->matrix[i][j], 1e-6)) res = false;
+int s21_sum_matrix(matrix_t *A, matrix_t *B, matrix_t *result){
+    if(A->matrix == NULL || B->matrix == NULL || result->matrix == NULL) return INVALID_MATRIX;
+
+    if ((A->rows != B->rows) || (B->rows != result->rows)) return INVALID_CALCULATIONS;
+    if ((A->columns != B->columns) || (B->columns != result->columns)) return INVALID_CALCULATIONS;
+
+    res_code res = OK;
+
+    for(int i = 0; i < A->rows; i++){
+        for(int j = 0; j < A->columns; j++){
+            result->matrix[i][j] = A->matrix[i][j] + B->matrix[i][j];
         }
     }
 
     return res;
 }
-
-// int s21_sum_matrix(matrix_t *A, matrix_t *B, matrix_t *result){
-//     if(A->matrix == NULL || B->matrix == NULL) return INVALID_MATRIX;
-
-//     if (A->rows != B->rows) return INVALID_CALCULATIONS;
-//     if (A->columns != B->columns) return INVALID_CALCULATIONS;
-
-
-
-// }

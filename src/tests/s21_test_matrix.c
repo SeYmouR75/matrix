@@ -14,7 +14,7 @@ void run_tests() {
         suite_s21_create_matrix(),   
         suite_s21_remove_matrix(),  
         suite_s21_eq_matrix(), 
-        // suite_s21_sum_matrix(),   
+        suite_s21_sum_matrix(),   
         // suite_s21_sub_matrix(), 
         // suite_s21_mult_number(),  
         // suite_s21_mult_matrix(),   
@@ -31,7 +31,8 @@ void run_tests() {
   }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  srand((long int)&argc + (long int)&argv);
   run_tests();
   return 0;
 }

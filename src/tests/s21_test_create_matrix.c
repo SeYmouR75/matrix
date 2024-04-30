@@ -33,8 +33,8 @@ START_TEST(create_normal_test){
     printf("act.rows:%d act.cols:%d exp.rows:%d exp.cols:%d", actual.rows, actual.columns, expected.rows, expected.columns);
     printf("\n_________\n");
 
-    s21_fill_matrix(&actual, 1.232);
-    s21_fill_matrix(&expected, 1.232);
+    fill_matrix(&actual, 1.232);
+    fill_matrix(&expected, 1.232);
     for(int i = 0; i < expected.rows; i++){
         ck_assert_ptr_nonnull(actual.matrix[i]);
         for(int j = 0; j < expected.columns; j++){
