@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include <time.h>
 
+#define ACCURACY 1e-6
+
 typedef enum res_code {
     OK = 0,
     INVALID_MATRIX = 1,
@@ -37,3 +39,4 @@ void fill_matrix(matrix_t *result, double value);
 void fill_matrix_rand(matrix_t *result, double entropy);
 void print_matrix(matrix_t *A);
 bool is_doubles_eq(double a, double b, double EPS);
+double accuracy_check(double a, double EPS);

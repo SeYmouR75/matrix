@@ -36,3 +36,7 @@ void print_matrix(matrix_t *A){
 bool is_doubles_eq(double a, double b, double EPS){
     return (fabs(a - b) < EPS);
 }
+
+double accuracy_check(double a, double EPS){
+    return fabs(a) < EPS ? 0 : a;
+}
