@@ -2,7 +2,7 @@
 
 int s21_create_matrix(int rows, int columns, matrix_t *result){
 
-    if ((rows < 0 || columns < 0) || (rows == 0 && columns == 0)){
+    if ((rows <= 0 || columns <= 0)){
         result->columns = 0;
         result->rows = 0;
         return INVALID_MATRIX;
