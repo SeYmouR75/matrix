@@ -21,13 +21,13 @@ START_TEST(eq_normal_test){
     fill_matrix(&A, A_filler_normal[_i]);
     fill_matrix(&B, B_filler_normal[_i]);
 
-    expected = is_doubles_eq(A_filler_normal[_i], B_filler_normal[_i], 1e-6);
+    expected = is_doubles_eq(A_filler_normal[_i], B_filler_normal[_i], ACCURACY);
     actual = s21_eq_matrix(&A, &B);
 
-    printf("\n_________\n");
-    printf("value_1:%lf value_2:%lf\n",A_filler_normal[_i], B_filler_normal[_i]);
-    printf("actual:%d expected:%d\n", actual, expected);
-    printf("\n_________\n");
+    // printf("\n_________\n");
+    // printf("value_1:%lf value_2:%lf\n", A_filler_normal[_i], B_filler_normal[_i]);
+    // printf("actual:%d expected:%d\n", actual, expected);
+    // printf("\n_________\n");
 
     ck_assert_int_eq(expected, actual);
     
@@ -61,7 +61,7 @@ START_TEST(eq_edge_test){
     fill_matrix(&B, B_filler_edge[_i]);
 
     if (res_A == OK && res_B == OK) {
-        expected = is_doubles_eq(A_filler_edge[_i], B_filler_edge[_i], 1e-6);
+        expected = is_doubles_eq(A_filler_edge[_i], B_filler_edge[_i], ACCURACY);
         actual = s21_eq_matrix(&A, &B);
     }else {
         expected = 0;
@@ -70,10 +70,10 @@ START_TEST(eq_edge_test){
 
     if (_i > 4) expected = 0;
 
-    printf("\n_________\n");
-    printf("value_1:%lf value_2:%lf\n",A_filler_edge[_i], B_filler_edge[_i]);
-    printf("actual:%d expected:%d\n", actual, expected);
-    printf("\n_________\n");
+    // printf("\n_________\n");
+    // printf("value_1:%lf value_2:%lf\n",A_filler_edge[_i], B_filler_edge[_i]);
+    // printf("actual:%d expected:%d\n", actual, expected);
+    // printf("\n_________\n");
 
     ck_assert_int_eq(expected, actual);
 

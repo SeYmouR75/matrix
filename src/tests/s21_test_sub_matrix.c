@@ -20,22 +20,24 @@ START_TEST(sub_normal_test){
 
     s21_sub_matrix(&A, &B, &res);
 
-    printf("\n_________\n");
-    print_matrix(&A);
-    print_matrix(&B);
-    print_matrix(&res);
+    // printf("\n_________\n");
+    // print_matrix(&A);
+    // print_matrix(&B);
+    // print_matrix(&res);
     
     for (int i = 0; i < A.rows; i++){
         for (int j = 0; j < A.columns; j++){
             actual = res.matrix[i][j];
-            expected = A.matrix[i][j] - B.matrix[i][j];
+            expected = accuracy_check(A.matrix[i][j], ACCURACY) - accuracy_check(B.matrix[i][j], ACCURACY);
+
             ck_assert_double_eq(expected, actual);
-            printf("actual:%lf expected:%lf\n", actual, expected);
+
+            // printf("actual:%lf expected:%lf\n", actual, expected);
         }
     }
 
     
-    printf("\n_________\n");
+    // printf("\n_________\n");
 
     s21_remove_matrix(&res);    
     s21_remove_matrix(&A);
@@ -65,21 +67,23 @@ START_TEST(sub_edge_test){
 
     s21_sub_matrix(&A, &B, &res);
 
-    printf("\n_________\n");
-    print_matrix(&A);
-    print_matrix(&B);
-    print_matrix(&res);
+    // printf("\n_________\n");
+    // print_matrix(&A);
+    // print_matrix(&B);
+    // print_matrix(&res);
 
     for (int i = 0; i < A.rows; i++){
         for (int j = 0; j < A.columns; j++){
             actual = res.matrix[i][j];
-            expected = A.matrix[i][j] - B.matrix[i][j];
+            expected = accuracy_check(A.matrix[i][j], ACCURACY) - accuracy_check(B.matrix[i][j], ACCURACY);
+
             ck_assert_double_eq(expected, actual);
-            printf("actual:%lf expected:%lf\n", actual, expected);
+
+            // printf("actual:%lf expected:%lf\n", actual, expected);
         }
     }
 
-    printf("\n_________\n");
+    // printf("\n_________\n");
 
     s21_remove_matrix(&res);   
     s21_remove_matrix(&A);

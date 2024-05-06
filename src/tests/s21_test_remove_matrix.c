@@ -13,8 +13,8 @@ START_TEST(remove_normal_test){
     _i++;
     int columns = normal_vals[_i];
 
-    printf("\n_________\n");
-    printf("iteration:%d start.rows:%d start.cols:%d\n", _i - 1, rows, columns);
+    // printf("\n_________\n");
+    // printf("iteration:%d start.rows:%d start.cols:%d\n", _i - 1, rows, columns);
 
     matrix_t actual;
     s21_create_matrix(rows, columns, &actual);
@@ -24,8 +24,8 @@ START_TEST(remove_normal_test){
     ck_assert_int_eq(actual.rows, 0);
     ck_assert_int_eq(actual.columns, 0);
 
-    printf("act.rows:%d act.cols:%d", actual.rows, actual.columns);
-    printf("\n_________\n");
+    // printf("act.rows:%d act.cols:%d", actual.rows, actual.columns);
+    // printf("\n_________\n");
 }
 END_TEST
 
@@ -42,8 +42,8 @@ START_TEST(remove_edge_test){
     _i++;
     int columns = normal_vals[_i];
 
-    printf("\n_________\n");
-    printf("iteration:%d start.rows:%d start.cols:%d\n", _i - 1, rows, columns);
+    // printf("\n_________\n");
+    // printf("iteration:%d start.rows:%d start.cols:%d\n", _i - 1, rows, columns);
 
     matrix_t actual;
     s21_create_matrix(rows, columns, &actual);
@@ -53,8 +53,8 @@ START_TEST(remove_edge_test){
     ck_assert_int_eq(actual.rows, 0);
     ck_assert_int_eq(actual.columns, 0);
 
-    printf("act.rows:%d act.cols:%d", actual.rows, actual.columns);
-    printf("\n_________\n");
+    // printf("act.rows:%d act.cols:%d", actual.rows, actual.columns);
+    // printf("\n_________\n");
 }
 END_TEST
 

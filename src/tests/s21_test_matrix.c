@@ -16,7 +16,7 @@ void run_tests() {
         suite_s21_eq_matrix(), 
         suite_s21_sum_matrix(),   
         suite_s21_sub_matrix(), 
-        // suite_s21_mult_number(),  
+        suite_s21_mult_number(),  
         // suite_s21_mult_matrix(),   
         // suite_s21_transpose(),  
         // suite_s21_calc_complements(),  
