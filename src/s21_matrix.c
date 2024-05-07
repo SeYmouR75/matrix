@@ -57,7 +57,7 @@ int s21_eq_matrix(matrix_t *A, matrix_t *B){
 }
 
 int s21_sum_matrix(matrix_t *A, matrix_t *B, matrix_t *result){
-    if (A->matrix == NULL || B->matrix == NULL || result == NULL) return INVALID_MATRIX;
+    if (A->matrix == NULL || B->matrix == NULL) return INVALID_MATRIX;
 
     if (A->rows != B->rows) return INVALID_CALCULATIONS;
     if (A->columns != B->columns) return INVALID_CALCULATIONS;
@@ -76,7 +76,7 @@ int s21_sum_matrix(matrix_t *A, matrix_t *B, matrix_t *result){
 }
 
 int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result){
-    if (A->matrix == NULL || B->matrix == NULL || result == NULL) return INVALID_MATRIX;
+    if (A->matrix == NULL || B->matrix == NULL) return INVALID_MATRIX;
 
     if (A->rows != B->rows) return INVALID_CALCULATIONS;
     if (A->columns != B->columns) return INVALID_CALCULATIONS;
@@ -95,16 +95,38 @@ int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result){
 }
 
 int s21_mult_number(matrix_t *A, double number, matrix_t *result){
-    if (A->matrix == NULL || result == NULL) return INVALID_MATRIX;
+    if (A->matrix == NULL) return INVALID_MATRIX;
 
     res_code res = s21_create_matrix(A->rows, A->columns, result);
 
     if (res == OK){
         number = accuracy_check(number, ACCURACY);
-
         for (int i = 0; i < A->rows; i++){
             for (int j = 0; j < A->columns; j++){
                 result->matrix[i][j] = accuracy_check(A->matrix[i][j], ACCURACY) * number;
+            }
+        }
+    }
+
+    return res;
+}
+
+int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result){
+    if (A->matrix == NULL || B->matrix == NULL) return INVALID_MATRIX;
+
+    if (A->columns != B->rows) return INVALID_CALCULATIONS;
+
+    res_code res = s21_create_matrix(A->rows, B->columns, result);
+
+    if (res == OK){
+        double sum;
+        for (int i = 0; i < A->rows; i++){
+            for (int j = 0; j < B->columns; j++){
+                sum = 0;
+                for (int k = 0; k < A->columns; k++){
+                    sum += accuracy_check(A->matrix[i][k], ACCURACY) * accuracy_check(B->matrix[k][j], ACCURACY);
+                }
+                result->matrix[i][j] = sum;
             }
         }
     }
