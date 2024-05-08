@@ -133,3 +133,19 @@ int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result){
 
     return res;
 }
+
+int s21_transpose(matrix_t *A, matrix_t *result){
+    if (A->matrix == NULL) return INVALID_MATRIX;
+
+    res_code res = s21_create_matrix(A->columns, A->rows, result);
+
+    if (res == OK){
+        for (int i = 0; i < A->rows; i++){
+            for (int j = 0; j < A->columns; j++){
+                result->matrix[j][i] = A->matrix[i][j];
+            }
+        }
+    }
+
+    return res;
+}
