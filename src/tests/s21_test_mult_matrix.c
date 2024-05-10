@@ -34,11 +34,11 @@ START_TEST(mult_test){
         }
     }
 
-    printf("\n_________\n");
-    print_matrix(&A);
-    print_matrix(&B);
-    print_matrix(&expected);
-    printf("\n_________\n");
+    // printf("\n_________\n");
+    // print_matrix(&A);
+    // print_matrix(&B);
+    // print_matrix(&expected);
+    // printf("\n_________\n");
 
     for (int i = 0; i < expected.rows; i++){
         for (int j = 0; j < expected.columns; j++){
