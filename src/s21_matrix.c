@@ -164,81 +164,40 @@ int s21_transpose(matrix_t *A, matrix_t *result){
 //     }
 // }
 
-int s21_determinant(matrix_t *A, double *result){
+int s21_determinant(matrix_t *A, double *result) {
     if (A->matrix == NULL) return INVALID_MATRIX;
-    
     if (A->rows != A->columns) return INVALID_CALCULATIONS;
 
-    matrix_t copy;
-    res_code creation_res = s21_create_matrix(A->rows, A->columns, &copy);
+    if (A->rows == 1){
+        *result = accuracy_check(A->matrix[0][0], ACCURACY);
+    } else if (A->rows == 2){
+        *result = accuracy_check(A->matrix[0][0], ACCURACY) * accuracy_check(A->matrix[1][1], ACCURACY) - accuracy_check(A->matrix[0][1], ACCURACY) * accuracy_check(A->matrix[1][0], ACCURACY);
+    } else {
+        matrix_t sub;
+        int res_code = s21_create_matrix(A->rows - 1, A->columns - 1, &sub);
 
-    if (creation_res == OK){
-        *result = 1.0;
+        if (res_code != OK) return res_code;
 
-        for (int i = 0; i < copy.rows; i++){
-            for (int j = 0; j < copy.columns; j++){
-                copy.matrix[i][j] = A->matrix[i][j];
-            }
-        }
-
-        for (int i = 0; i < copy.rows; i++){
-
-            int max_row = i;
-            for (int j = i + 1; j < copy.columns; j++){
-                if (fabs(copy.matrix[j][i]) > fabs(copy.matrix[max_row][i])){
-                    max_row = j;
-                }
-            }
-
-            if (i != max_row){
-                for (int j = 0; j < copy.columns; j++){
-                    double tmp = copy.matrix[i][j];
-                    copy.matrix[i][j] = copy.matrix[max_row][i];
-                    copy.matrix[max_row][i] = tmp;
-                }
-                *result *= -1;
-            }
-
-            for (int j = i + 1; j < copy.columns; j++){
-                if(copy.matrix[i][i] == 0){
-                    int nonzero_row = -1;
-                    for (int k = i + 1; k < copy.columns && nonzero_row == -1; k++){
-                        if (copy.matrix[k][j] != 0){
-                            nonzero_row = k;
-                        }
-                    }
-
-                    if (nonzero_row != -1){
-                        for (int k = 0; k < copy.columns; k++){
-                            double tmp = copy.matrix[i][k];
-                            copy.matrix[i][k] = copy.matrix[nonzero_row][k];
-                            copy.matrix[nonzero_row][k] = tmp;
-                        }
-                        *result *= -1;
-
-                        for (int j = 0; j < i; j++) {
-                            double temp = copy.matrix[j][i];
-                            copy.matrix[j][i] = copy.matrix[j][nonzero_row];
-                            copy.matrix[j][nonzero_row] = temp;
-                        }
-                    }else {
-                        *result = 0;
-                    }
-                }
-                double coefficient = copy.matrix[j][i] / copy.matrix[i][i];
-                for (int k = i; k < copy.columns; k++){
-                    copy.matrix[j][k] -= coefficient * copy.matrix[i][k];
-                }
-            }
-        }
+        int sign = 1;
 
         for (int i = 0; i < A->rows; i++){
-            printf("\n\n result %d = %lf \n\n", i, *result);
-            *result *= copy.matrix[i][i];
+
+            for (int j = 1; j < A->rows; j++){
+                int col = 0;
+                for (int k = 0; k < A->rows; k++){
+                    if(k != i){
+                        sub.matrix[j - 1][col] = accuracy_check(A->matrix[j][k], ACCURACY);
+                        col++;
+                    }
+                }
+            }
+
+            double rec_det = 0.0;
+            s21_determinant(&sub, &rec_det);
+            *result += sign * accuracy_check(A->matrix[0][i], ACCURACY) * rec_det;
+            sign *= -1;
         }
-
-        s21_remove_matrix(&copy);
+        s21_remove_matrix(&sub);
     }
-
-    return creation_res;
+    return OK;
 }

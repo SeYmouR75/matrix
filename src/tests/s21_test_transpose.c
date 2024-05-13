@@ -13,7 +13,7 @@ START_TEST(transpose_matrix){
     matrix_t A, result; 
 
     s21_create_matrix(rows[_i], cols[_i], &A);
-    fill_matrix_rand(&A, rand() % 100);
+    fill_matrix_rand(&A, rand() / 100);
 
     s21_transpose(&A, &result);
 

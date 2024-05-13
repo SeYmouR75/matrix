@@ -20,7 +20,7 @@ void run_tests() {
         suite_s21_mult_matrix(),   
         suite_s21_transpose(),  
         // suite_s21_calc_complements(),  
-        // suite_s21_determinant(),   
+        suite_s21_determinant(),   
         // suite_s21_inverse_matrix(),
         NULL};
 
