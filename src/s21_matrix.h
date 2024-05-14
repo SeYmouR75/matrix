@@ -40,3 +40,4 @@ void fill_matrix_rand(matrix_t *result, double entropy);
 void print_matrix(matrix_t *A);
 bool is_doubles_eq(double a, double b, double EPS);
 double accuracy_check(double a, double EPS);
+void split_to_sub(matrix_t A, matrix_t *sub, int row_to_skip, int col_to_skip);

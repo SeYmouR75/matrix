@@ -150,19 +150,37 @@ int s21_transpose(matrix_t *A, matrix_t *result){
     return res;
 }
 
-// int s21_calc_complements(matrix_t *A, matrix_t *result){
-//     if (A->matrix == NULL) return INVALID_MATRIX;
+int s21_calc_complements(matrix_t *A, matrix_t *result){
+    if (A->matrix == NULL) return INVALID_MATRIX;
+    if (A->rows != A->columns) return INVALID_CALCULATIONS;
 
-//     res_code res = s21_create_matrix(A->rows, A->columns, result);
+    res_code res = s21_create_matrix(A->rows, A->columns, result);
     
-//     if (res == OK){
-//         for (int i =0; i < A->rows; i++){
-//             for (int j = 0; j < A->columns; j++){
-//                 result->matrix[i][j] = 
-//             }
-//         }
-//     }
-// }
+    if (res != OK) return res;
+
+    if (A->rows == 1){
+        result->matrix[0][0] = accuracy_check(A->matrix[0][0], ACCURACY);
+    } else{
+        double det = 0;
+        int sign = 0;
+        matrix_t sub;
+        res = s21_create_matrix(A->rows - 1, A->columns - 1, &sub);
+
+        for (int i = 0; i < A->rows; i++){
+            for (int j = 0; j < A->columns; j++){
+                split_to_sub(*A, &sub, i, j);
+                print_matrix(&sub);
+                s21_determinant(&sub, &det);
+                printf("det: %lf\n\n", det);
+                sign = ((i + j) % 2 == 0) ? 1 : -1;
+                result->matrix[i][j] = det * sign;
+            }
+        }
+
+        s21_remove_matrix(&sub);
+    }
+    return res;
+}
 
 int s21_determinant(matrix_t *A, double *result) {
     if (A->matrix == NULL) return INVALID_MATRIX;
@@ -174,23 +192,16 @@ int s21_determinant(matrix_t *A, double *result) {
         *result = accuracy_check(A->matrix[0][0], ACCURACY) * accuracy_check(A->matrix[1][1], ACCURACY) - accuracy_check(A->matrix[0][1], ACCURACY) * accuracy_check(A->matrix[1][0], ACCURACY);
     } else {
         matrix_t sub;
-        int res_code = s21_create_matrix(A->rows - 1, A->columns - 1, &sub);
+        res_code res = s21_create_matrix(A->rows - 1, A->columns - 1, &sub);
 
-        if (res_code != OK) return res_code;
+        if (res != OK) return res;
 
+        *result = 0;
         int sign = 1;
 
         for (int i = 0; i < A->rows; i++){
 
-            for (int j = 1; j < A->rows; j++){
-                int col = 0;
-                for (int k = 0; k < A->rows; k++){
-                    if(k != i){
-                        sub.matrix[j - 1][col] = accuracy_check(A->matrix[j][k], ACCURACY);
-                        col++;
-                    }
-                }
-            }
+            split_to_sub(*A, &sub, 0, i);
 
             double rec_det = 0.0;
             s21_determinant(&sub, &rec_det);
@@ -199,5 +210,6 @@ int s21_determinant(matrix_t *A, double *result) {
         }
         s21_remove_matrix(&sub);
     }
+
     return OK;
 }
