@@ -40,3 +40,19 @@ bool is_doubles_eq(double a, double b, double EPS){
 double accuracy_check(double a, double EPS){
     return fabs(a) < EPS ? 0 : a;
 }
+
+void split_to_sub(matrix_t A, matrix_t *sub, int row_to_skip, int col_to_skip){
+    int row = 0, col = 0;
+    for (int i = 0; i < A.rows; i++){
+        if (i != row_to_skip){
+            for (int j = 0; j < A.columns; j++){
+                if (j != col_to_skip){;
+                    sub->matrix[row][col] = A.matrix[i][j]; 
+                    col++;     
+                }
+            }
+            row++;
+            col = 0;
+        }
+    }
+}
