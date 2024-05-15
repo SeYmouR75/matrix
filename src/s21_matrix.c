@@ -163,15 +163,13 @@ int s21_calc_complements(matrix_t *A, matrix_t *result){
     } else{
         double det = 0;
         int sign = 0;
-        matrix_t sub;
+        matrix_t sub = {0};
         res = s21_create_matrix(A->rows - 1, A->columns - 1, &sub);
 
         for (int i = 0; i < A->rows; i++){
             for (int j = 0; j < A->columns; j++){
                 split_to_sub(*A, &sub, i, j);
-                print_matrix(&sub);
                 s21_determinant(&sub, &det);
-                printf("det: %lf\n\n", det);
                 sign = ((i + j) % 2 == 0) ? 1 : -1;
                 result->matrix[i][j] = det * sign;
             }
@@ -191,7 +189,7 @@ int s21_determinant(matrix_t *A, double *result) {
     } else if (A->rows == 2){
         *result = accuracy_check(A->matrix[0][0], ACCURACY) * accuracy_check(A->matrix[1][1], ACCURACY) - accuracy_check(A->matrix[0][1], ACCURACY) * accuracy_check(A->matrix[1][0], ACCURACY);
     } else {
-        matrix_t sub;
+        matrix_t sub = {0};
         res_code res = s21_create_matrix(A->rows - 1, A->columns - 1, &sub);
 
         if (res != OK) return res;
@@ -209,6 +207,30 @@ int s21_determinant(matrix_t *A, double *result) {
             sign *= -1;
         }
         s21_remove_matrix(&sub);
+    }
+
+    return OK;
+}
+
+int s21_inverse_matrix(matrix_t *A, matrix_t *result){
+    if (A->matrix == NULL) return INVALID_MATRIX;
+    if (A->rows != A->columns) return INVALID_CALCULATIONS;
+
+    double det = 0.0;
+    s21_determinant(A, &det);
+
+    if(det == 0) return INVALID_CALCULATIONS;
+
+    matrix_t minor = {0};
+
+    s21_calc_complements(A, &minor);
+    s21_transpose(&minor, result);
+    s21_remove_matrix(&minor);
+
+    for (int i = 0; i < result->rows; i++){
+        for (int j = 0; j < result->columns; j++){
+            result->matrix[i][j] = 1 / det * result->matrix[i][j];
+        }
     }
 
     return OK;
