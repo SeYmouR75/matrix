@@ -24,6 +24,7 @@ $(BUILD_DIR)/%.o: %.c
 	
 test: $(TARGET)
 	./$(BUILD_DIR)/$(TARGET)
+#	valgrind --tool=memcheck --leak-check=yes -s ./$(BUILD_DIR)/$(TARGET)
 
 gcov: gcov_flags test
 

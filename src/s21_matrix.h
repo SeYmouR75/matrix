@@ -1,25 +1,25 @@
+#include <math.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
-#include <stdbool.h>
 #include <time.h>
 
 #define ACCURACY 1e-6
 
 typedef enum res_code {
-    OK = 0,
-    INVALID_MATRIX = 1,
-    INVALID_CALCULATIONS = 2
+  OK = 0,
+  INVALID_MATRIX = 1,
+  INVALID_CALCULATIONS = 2
 } res_code;
 
 typedef struct matrix_struct {
-    double** matrix;
-    int rows;
-    int columns;
+  double **matrix;
+  int rows;
+  int columns;
 } matrix_t;
 
-//core
+// core
 
 int s21_create_matrix(int rows, int columns, matrix_t *result);
 void s21_remove_matrix(matrix_t *A);
@@ -33,7 +33,7 @@ int s21_calc_complements(matrix_t *A, matrix_t *result);
 int s21_determinant(matrix_t *A, double *result);
 int s21_inverse_matrix(matrix_t *A, matrix_t *result);
 
-//utils
+// utils
 
 void fill_matrix(matrix_t *result, double value);
 void fill_matrix_rand(matrix_t *result, double entropy);
