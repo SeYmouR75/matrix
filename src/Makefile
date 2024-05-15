@@ -15,6 +15,8 @@ SRC=$(wildcard *.c)
 OBJ=$(addprefix $(BUILD_DIR)/,$(SRC:%.c=%.o))
 TARGET=s21_matrix.a
 
+all: $(TARGET)
+
 $(TARGET): $(OBJ)
 	ar rcs $@ $(OBJ)
 
